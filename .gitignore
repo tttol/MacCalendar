@@ -93,4 +93,4 @@ iOSInjectionProject/
 .DS_Store
 
 *.plist
-MacCalendar.xcodeproj/xcshareddata/*
+MacCalendar.xcodeproj/xcshareddata/
