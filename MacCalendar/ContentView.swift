@@ -97,7 +97,7 @@ struct CustomCalendarView: View {
     }
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 4) {
             // Header with month/year and navigation
             HStack {
                 Button(action: previousMonth) {
@@ -144,7 +144,6 @@ struct CustomCalendarView: View {
             }
             .padding(.horizontal)
         }
-        .padding(.vertical, 8)
     }
     
     private func previousMonth() {
