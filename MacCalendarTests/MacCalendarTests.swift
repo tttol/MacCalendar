@@ -1,10 +1,3 @@
-//
-//  MacCalendarTests.swift
-//  MacCalendarTests
-//
-//  Created by 髙橋透 on 2025/08/08.
-//
-
 import Testing
 
 struct MacCalendarTests {

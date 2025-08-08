@@ -1,10 +1,3 @@
-//
-//  MacCalendarUITests.swift
-//  MacCalendarUITests
-//
-//  Created by 髙橋透 on 2025/08/08.
-//
-
 import XCTest
 
 final class MacCalendarUITests: XCTestCase {
