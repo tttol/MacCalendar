@@ -1,24 +1,40 @@
 # MacCalendar
-<img width="512" height="512" alt="icon_512x512" src="https://raw.githubusercontent.com/tttol/MacCalendar/refs/heads/main/screenshot.png" />
-MacCalendar is a simple calendar application. This app adds a current calendar into your Mac menu bar.
+<img width="512" height="512" alt="MacCalendar Screenshot" src="https://raw.githubusercontent.com/tttol/MacCalendar/refs/heads/main/screenshot.png" />
+MacCalendar is a simple calendar application that adds a calendar of current month to your macOS menu bar.
 
-# Build&Installation
+## Features
+* Displays the current month's calendar directly in the menu bar.
+* Lightweight and easy to use.
+
+## Build & Installation
 ### Requirements
-- XCode 16.4+
-- MacOS Sequoia 15.5+
-### Step
-1. Clone this repository.
-```sh
-git clone https://github.com/tttol/MacCalendar.git
-```
-2. Open this repository with XCode
-3. Product -> Clean build folfer (⇧⌘K)
-4. Product -> Build (⌘B)
-5. `MacCalendar.app` is created in /Users/[username]/Library/Developer/Xcode/DerivedData/MacCalendar-[hash value]/Build/Products/Debug/MacCalendar.app. Copy this file to /Applications.
-```sh
-cp /Users/[username]/Library/Developer/Xcode/DerivedData/MacCalendar-[hash value]/Build/Products/Debug/MacCalendar.app /Applications
-```
-6. Now you can run MacCalendar.app! 
+* Xcode 16.4 or later
+* macOS Sequoia 15.5 or later
 
-# App Icon
-<img width="256" height="256" alt="icon_512x512" src="https://github.com/user-attachments/assets/ab689fbe-ab03-44e8-a11c-489b14e140e7" /><br>
+### Steps
+1.  **Clone the repository:**
+    ```sh
+    git clone [https://github.com/tttol/MacCalendar.git](https://github.com/tttol/MacCalendar.git)
+    cd MacCalendar
+    ```
+2.  **Open the project in Xcode:**
+    ```sh
+    xed .
+    ```
+    Alternatively, you can open the `MacCalendar.xcodeproj` file directly.
+
+3.  **Clean the build folder (Optional but recommended):**
+    * From the menu bar, select `Product` > `Clean Build Folder`.(⇧⌘K)
+4.  **Build the application:**
+    * From the menu bar, select `Product` > `Build`.(⌘B)
+
+5.  **Locate and install the app:**
+    After a successful build, `MacCalendar.app` will be located in a path similar to this:
+    `/Users/[YourUsername]/Library/Developer/Xcode/DerivedData/MacCalendar-[some-hash]/Build/Products/Debug/`
+    Copy `MacCalendar.app` to your `/Applications` folder to install it.
+
+6.  **Run the app:**
+    You can now launch MacCalendar from your Applications folder!
+
+## App Icon
+<img width="256" height="256" alt="MacCalendar App Icon" src="https://github.com/user-attachments/assets/ab689fbe-ab03-44e8-a11c-489b14e140e7" /><br>
