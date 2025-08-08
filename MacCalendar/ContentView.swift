@@ -3,22 +3,11 @@ import SwiftUI
 struct ContentView: View {
     @State private var currentDate = Date()
     @State private var selectedDate = Date()
+    @State private var timer: Timer?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Close button header
-            HStack {
-                Spacer()
-                Button(action: closeWindow) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.secondary)
-                        .font(.title2)
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            .padding(.horizontal, 8)
-            .padding(.top, 8)
-            
+            // Calendar
             CustomCalendarView(selectedDate: $selectedDate)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -36,10 +25,14 @@ struct ContentView: View {
         .onAppear {
             startTimer()
         }
+        .onDisappear {
+            timer?.invalidate()
+        }
     }
     
     private func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             currentDate = Date()
         }
     }
