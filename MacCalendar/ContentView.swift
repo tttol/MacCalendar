@@ -6,6 +6,19 @@ struct ContentView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            // Close button header
+            HStack {
+                Spacer()
+                Button(action: closeWindow) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.secondary)
+                        .font(.title2)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 8)
+            .padding(.top, 8)
+            
             CustomCalendarView(selectedDate: $selectedDate)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -28,6 +41,12 @@ struct ContentView: View {
     private func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             currentDate = Date()
+        }
+    }
+    
+    private func closeWindow() {
+        if let window = NSApplication.shared.windows.first(where: { $0.isVisible }) {
+            window.close()
         }
     }
     
