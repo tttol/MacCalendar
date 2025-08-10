@@ -1,6 +1,4 @@
 import Testing
-import SwiftUI
-@testable import MacCalendar
 
 struct MacCalendarTests {
     @Test func example() async throws {
