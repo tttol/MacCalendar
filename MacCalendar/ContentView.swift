@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentDate = Date()
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date? = nil
     @State private var timer: Timer?
     private let calendar = Calendar.current
     
@@ -31,7 +31,11 @@ struct ContentView: View {
             timer?.invalidate()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            currentDate = Date()
+            let newDate = Date()
+            if !calendar.isDate(currentDate, inSameDayAs: newDate) {
+                selectedDate = nil
+            }
+            currentDate = newDate
         }
     }
     
@@ -40,6 +44,7 @@ struct ContentView: View {
         timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
             let newDate = Date()
             if !calendar.isDate(currentDate, inSameDayAs: newDate) {
+                selectedDate = nil
                 currentDate = newDate
             }
         }
@@ -64,7 +69,7 @@ struct ContentView: View {
 }
 
 struct CustomCalendarView: View {
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
     @Binding var currentDate: Date
     @State private var currentMonth = Date()
     
@@ -172,7 +177,7 @@ struct CustomCalendarView: View {
 
 struct DayView: View {
     let date: Date
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
     let currentMonth: Date
     let currentDate: Date
     
@@ -189,7 +194,8 @@ struct DayView: View {
     }
     
     private var isSelected: Bool {
-        calendar.isDate(date, inSameDayAs: selectedDate)
+        guard let selectedDate = selectedDate else { return false }
+        return calendar.isDate(date, inSameDayAs: selectedDate)
     }
     
     private var isInCurrentMonth: Bool {
@@ -206,7 +212,9 @@ struct DayView: View {
     }
     
     var body: some View {
-        Button(action: { selectedDate = date }) {
+        Button(action: { 
+            selectedDate = (selectedDate != nil && calendar.isDate(date, inSameDayAs: selectedDate!)) ? nil : date
+        }) {
             Text(dayNumber)
                 .font(.system(size: 16, weight: .medium))
                 .frame(width: 32, height: 32)
