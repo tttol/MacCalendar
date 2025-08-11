@@ -2,13 +2,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentDate = Date()
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date? = nil
     @State private var timer: Timer?
+    private let calendar = Calendar.current
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Calendar
-            CustomCalendarView(selectedDate: $selectedDate)
+            CustomCalendarView(selectedDate: $selectedDate, currentDate: $currentDate)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Footer
@@ -23,17 +24,29 @@ struct ContentView: View {
         }
         .background(Color(NSColor.windowBackgroundColor))
         .onAppear {
+            currentDate = Date()
             startTimer()
         }
         .onDisappear {
             timer?.invalidate()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            let newDate = Date()
+            if !calendar.isDate(currentDate, inSameDayAs: newDate) {
+                selectedDate = nil
+            }
+            currentDate = newDate
+        }
     }
     
     private func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            currentDate = Date()
+        timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+            let newDate = Date()
+            if !calendar.isDate(currentDate, inSameDayAs: newDate) {
+                selectedDate = nil
+                currentDate = newDate
+            }
         }
     }
     
@@ -56,7 +69,8 @@ struct ContentView: View {
 }
 
 struct CustomCalendarView: View {
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
+    @Binding var currentDate: Date
     @State private var currentMonth = Date()
     
     private let calendar = Calendar.current
@@ -131,7 +145,8 @@ struct CustomCalendarView: View {
                     DayView(
                         date: date,
                         selectedDate: $selectedDate,
-                        currentMonth: currentMonth
+                        currentMonth: currentMonth,
+                        currentDate: currentDate
                     )
                 }
             }
@@ -162,8 +177,9 @@ struct CustomCalendarView: View {
 
 struct DayView: View {
     let date: Date
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
     let currentMonth: Date
+    let currentDate: Date
     
     private let calendar = Calendar.current
     
@@ -174,11 +190,12 @@ struct DayView: View {
     }
     
     private var isToday: Bool {
-        calendar.isDateInToday(date)
+        calendar.isDate(date, inSameDayAs: currentDate)
     }
     
     private var isSelected: Bool {
-        calendar.isDate(date, inSameDayAs: selectedDate)
+        guard let selectedDate = selectedDate else { return false }
+        return calendar.isDate(date, inSameDayAs: selectedDate)
     }
     
     private var isInCurrentMonth: Bool {
@@ -195,7 +212,9 @@ struct DayView: View {
     }
     
     var body: some View {
-        Button(action: { selectedDate = date }) {
+        Button(action: { 
+            selectedDate = (selectedDate != nil && calendar.isDate(date, inSameDayAs: selectedDate!)) ? nil : date
+        }) {
             Text(dayNumber)
                 .font(.system(size: 16, weight: .medium))
                 .frame(width: 32, height: 32)
