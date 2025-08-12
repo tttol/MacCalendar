@@ -1,5 +1,5 @@
 # MacCalendar
-<img width="518" height="470" alt="image" src="https://github.com/user-attachments/assets/ffee4106-9ac2-4a0e-b360-68e76cd6ea5d" />
+<img width="503" height="446" alt="image" src="https://github.com/user-attachments/assets/876003ef-fbcb-4c23-b860-1b913e419819" />
 <br>
 MacCalendar is a simple calendar application that adds a calendar of current month to your macOS menu bar.
 
