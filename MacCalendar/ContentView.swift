@@ -4,12 +4,13 @@ struct ContentView: View {
     @State private var currentDate = Date()
     @State private var selectedDate: Date? = nil
     @State private var timer: Timer?
+    @StateObject private var holidayManager = HolidayManager()
     private let calendar = Calendar.current
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Calendar
-            CustomCalendarView(selectedDate: $selectedDate, currentDate: $currentDate)
+            CustomCalendarView(selectedDate: $selectedDate, currentDate: $currentDate, holidayManager: holidayManager)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Footer
@@ -72,6 +73,7 @@ struct CustomCalendarView: View {
     @Binding var selectedDate: Date?
     @Binding var currentDate: Date
     @State private var currentMonth = Date()
+    let holidayManager: HolidayManager
     
     private let calendar = Calendar.current
     private let dateFormatter = DateFormatter()
@@ -146,7 +148,8 @@ struct CustomCalendarView: View {
                         date: date,
                         selectedDate: $selectedDate,
                         currentMonth: currentMonth,
-                        currentDate: currentDate
+                        currentDate: currentDate,
+                        holidayManager: holidayManager
                     )
                 }
             }
@@ -180,6 +183,7 @@ struct DayView: View {
     @Binding var selectedDate: Date?
     let currentMonth: Date
     let currentDate: Date
+    let holidayManager: HolidayManager
     
     private let calendar = Calendar.current
     
@@ -202,12 +206,20 @@ struct DayView: View {
         calendar.isDate(date, equalTo: currentMonth, toGranularity: .month)
     }
     
+    private var isHoliday: Bool {
+        holidayManager.isHoliday(date)
+    }
+    
     private var weekdayColor: Color {
         let weekday = calendar.component(.weekday, from: date)
         switch weekday {
         case 1: return .red      // Sunday
         case 7: return .blue     // Saturday
-        default: return .white   // Weekdays
+        default: 
+            if isHoliday {
+                return .red      // Holiday (except Saturday)
+            }
+            return .white        // Weekdays
         }
     }
     
@@ -222,10 +234,10 @@ struct DayView: View {
                     Group {
                         if isSelected {
                             Circle()
-                                .fill(Color.blue)
+                                .fill(Color.white)
                         } else if isToday {
                             Circle()
-                                .stroke(Color.blue, lineWidth: 2)
+                                .fill(Color.blue)
                         } else {
                             Circle()
                                 .fill(Color.clear)
@@ -233,8 +245,8 @@ struct DayView: View {
                     }
                 )
                 .foregroundColor(
-                    isSelected ? .white :
-                    isToday ? .blue :
+                    isSelected ? .black :
+                    isToday ? .white :
                     isInCurrentMonth ? weekdayColor : .secondary
                 )
         }
