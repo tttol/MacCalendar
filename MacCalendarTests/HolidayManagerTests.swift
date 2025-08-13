@@ -33,7 +33,7 @@ struct HolidayManagerTests {
         
         // Test a regular day that should not be a holiday
         if let regularDate = dateFormatter.date(from: "2025/8/12") {
-            #expect(holidayManager.isHoliday(regularDate))
+            #expect(!holidayManager.isHoliday(regularDate))
         }
     }
 }
