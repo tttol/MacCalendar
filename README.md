@@ -3,11 +3,15 @@
 <br>
 MacCalendar is a simple calendar application that adds a calendar of current month to your macOS menu bar.
 
-## Features
+# Features
 * Displays the current month's calendar directly in the menu bar.
 * Lightweight and easy to use.
 
-## Build & Installation
+# Installation
+1. Download binary file from this URL: https://github.com/tttol/MacCalendar/releases/download/1.0.0/MacCalendar.zip
+2. Unzip `MacCalendar.zip` and move `MacCalendar.app` to `/Applications`
+
+# Build
 ### Requirements
 * Xcode 16.4 or later
 * macOS Sequoia 15.5 or later
@@ -37,5 +41,5 @@ MacCalendar is a simple calendar application that adds a calendar of current mon
 6.  **Run the app:**
     You can now launch MacCalendar from your Applications folder!
 
-## App Icon
+# App Icon
 <img width="256" height="256" alt="MacCalendar App Icon" src="https://github.com/user-attachments/assets/ab689fbe-ab03-44e8-a11c-489b14e140e7" /><br>
