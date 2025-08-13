@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: macos-15
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Select Xcode version
+      run: sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
+    
+    - name: Run tests
+      run: xcodebuild test -project MacCalendar.xcodeproj -scheme MacCalendar -destination 'platform=macOS'
