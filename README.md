@@ -42,4 +42,4 @@ MacCalendar is a simple calendar application that adds a calendar of current mon
     You can now launch MacCalendar from your Applications folder!
 
 # App Icon
-<img width="256" height="256" alt="MacCalendar App Icon" src="https://github.com/user-attachments/assets/ab689fbe-ab03-44e8-a11c-489b14e140e7" /><br>
+<img width="256" height="256" alt="MacCalendar App Icon" src="https://github.com/tttol/MacCalendar/blob/main/MacCalendar/Assets.xcassets/AppIcon.appiconset/icon_256x256.png?raw=true" /><br>
